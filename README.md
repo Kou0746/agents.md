@@ -1,49 +1,93 @@
-# AGENTS.md
+# rfcdiff
 
-![AGENTS.md logo](./public/og.png)
+[rfcdiff web service](https://author-tools.ietf.org/iddiff) | [rfcdiff script](https://github.com/ietf-tools/rfcdiff/raw/main/rfcdiff)
 
-[AGENTS.md](https://agents.md) is a simple, open format for guiding coding agents.
+The purpose of this program is to compare two versions of an
+internet-draft, and as output produce a diff in one of several
+formats:
+ * side-by-side html diff
+ * paged wdiff output in a text terminal
+ * a text file with changebars in the left margin
+ * a simple unified diff output
 
-Think of AGENTS.md as a README for agents: a dedicated, predictable place
-to provide context and instructions to help AI coding agents work on your project.
+In all cases, internet-draft headers and footers are stripped before generating the diff, to produce a cleaner diff.
 
-Below is a minimal example of an AGENTS.md file:
+## Usage
+```
+    rfcdiff [options] file1 file2
 
-```markdown
-# Sample AGENTS.md file
+    rfcdiff takes two RFCs or Internet-Drafts in text form as input, and
+    produces output which indicates the differences found in one of various
+    forms, controlled by the options listed below. In all cases, page
+    headers and page footers are stripped before looking for changes.
 
-## Dev environment tips
-- Use `pnpm dlx turbo run where <project_name>` to jump to a package instead of scanning with `ls`.
-- Run `pnpm install --filter <project_name>` to add the package to your workspace so Vite, ESLint, and TypeScript can see it.
-- Use `pnpm create vite@latest <project_name> -- --template react-ts` to spin up a new React + Vite package with TypeScript checks ready.
-- Check the name field inside each package's package.json to confirm the right name—skip the top-level one.
+    --html      Produce side-by-side .html diff (default)
 
-## Testing instructions
-- Find the CI plan in the .github/workflows folder.
-- Run `pnpm turbo run test --filter <project_name>` to run every check defined for that package.
-- From the package root you can just call `pnpm test`. The commit should pass all tests before you merge.
-- To focus on one step, add the Vitest pattern: `pnpm vitest run -t "<test name>"`.
-- Fix any test or type errors until the whole suite is green.
-- After moving files or changing imports, run `pnpm lint --filter <project_name>` to be sure ESLint and TypeScript rules still pass.
-- Add or update tests for the code you change, even if nobody asked.
+    --chbars    Produce changebar marked .txt output
 
-## PR instructions
-- Title format: [<project_name>] <Title>
-- Always run `pnpm lint` and `pnpm test` before committing.
+    --diff      Produce a regular diff output
+
+    --wdiff     Produce paged wdiff output
+
+    --hwdiff    Produce html-wrapped coloured wdiff output
+
+    --oldcolour COLOURNAME  Colour for new file in hwdiff (default is "green")
+    --oldcolor COLORNAME    Color for old file in hwdiff (default is "red")
+
+    --newcolour COLOURNAME  Colour for new file in hwdiff (default is "green")
+    --newcolor COLORNAME    Color for new file in hwdiff (default is "green")
+
+    --larger        Make difference text in hwdiff slightly larger
+
+    --browse    Show html output in browser
+
+    --keep      Don't delete temporary workfiles
+
+    --version   Show version
+
+    --help      Show this help
+
+    --info "Synopsis|Usage|Copyright|Description|Log"
+            Show various info
+
+    --width N   Set a maximum width of N characters for the
+            display of each half of the old/new html diff
+
+    --linenum   Show linenumbers for each line, not only at the
+            start of each change section
+
+    --body      Strip document preamble (title, boilerplate and
+            table of contents) and postamble (Intellectual
+            Property Statement, Disclaimer etc)
+
+    --nostrip   Don't strip headers and footers (or body)
+
+    --ab-diff   Before/After diff, suitable for rfc-editor
+    --abdiff
+
+    --stdout    Send output to stdout instead to a file
+
+    --context LINES Provide a different number of lines of context,
+            by default 10
 ```
 
-## Website
+##  Copyright
 
-This repository also includes a basic Next.js website hosted at https://agents.md/
-that explains the project’s goals in a simple way, and featuring some examples.
+```
+    Copyright 2002 Henrik Levkowetz
+    Copyright 2021 IETF Trust
 
-### Running the app locally
-1. Install dependencies:
-   ```bash
-   pnpm install
-   ```
-2. Start the development server:
-   ```bash
-   pnpm run dev
-   ```
-3. Open your browser and go to http://localhost:3000
+    This program is free software; you can redistribute it and/or modify
+    it under the terms of the GNU General Public License as published by
+    the Free Software Foundation; either version 2 of the License, or
+    (at your option) any later version.
+
+    This program is distributed in the hope that it will be useful,
+    but WITHOUT ANY WARRANTY; without even the implied warranty of
+    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+    GNU General Public License for more details.
+
+    You should have received a copy of the GNU General Public License
+    along with this program; if not, write to the Free Software
+    Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
+```
